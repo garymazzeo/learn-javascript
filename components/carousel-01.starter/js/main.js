@@ -42,13 +42,13 @@ const highlightDot = (currentDot, targetDot) => {
 
 /**
  * Shows or hides the arrow button for advancing the slides based on slide position
- * @param {HTMLElement} clickedDotIndex Index of the dot that was clicked
+ * @param {HTMLElement} targetSlideIndex Index of the dot that was clicked
  */
-const showHideArrowButtons = clickedDotIndex => {
-  if (clickedDotIndex === 0) {
+const showHideArrowButtons = targetSlideIndex => {
+  if (targetSlideIndex === 0) {
     previousButton.setAttribute('hidden', true)
     nextButton.removeAttribute('hidden')
-  } else if (clickedDotIndex === dots.length - 1) {
+  } else if (targetSlideIndex === dots.length - 1) {
     previousButton.removeAttribute('hidden')
     nextButton.setAttribute('hidden', true)
   } else {
@@ -67,15 +67,11 @@ nextButton.addEventListener('click', event => {
   
   switchSlide(currentSlide, nextSlide)
 
-  previousButton.removeAttribute('hidden')
-
-  if (!nextSlide.nextElementSibling) {
-    nextButton.setAttribute('hidden', true)
-  }
+  const nextSlideIndex = slides.findIndex(slide => slide === nextSlide)
+  showHideArrowButtons(nextSlideIndex)
 
   const currentDot = dotsContainer.querySelector('.is-selected')
   const nextDot = currentDot.nextElementSibling
-
   highlightDot(currentDot, nextDot)
 })
 
@@ -84,11 +80,8 @@ previousButton.addEventListener('click', event => {
   const previousSlide = currentSlide.previousElementSibling
   switchSlide(currentSlide, previousSlide)
 
-  nextButton.removeAttribute('hidden')
-
-  if (!previousSlide.previousElementSibling) {
-    previousButton.setAttribute('hidden', true)
-  }
+  const previousSlideIndex = slides.findIndex(slide => slide === previousSlide)
+  showHideArrowButtons(previousSlideIndex)
 
   const currentDot = dotsContainer.querySelector('.is-selected')
   const previousDot = currentDot.previousElementSibling
@@ -103,11 +96,11 @@ dotsContainer.addEventListener('click', event => {
   if (!dot) return
 
   const currentSlide = contents.querySelector('.is-selected')
-  const clickedDotIndex = dots.findIndex(d => d === dot)
-  const slideToShow = slides[clickedDotIndex]
+  const targetSlideIndex = dots.findIndex(d => d === dot)
+  const slideToShow = slides[targetSlideIndex]
   switchSlide(currentSlide, slideToShow)
 
-  showHideArrowButtons(clickedDotIndex)
+  showHideArrowButtons(targetSlideIndex)
 
   const currentDot = dotsContainer.querySelector('.is-selected')
   highlightDot(currentDot, dot)
