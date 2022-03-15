@@ -3,7 +3,31 @@
 // open content
 // switch icon
 
-const accordions = Array.from(document.querySelectorAll('.accordion'))
+/**
+ * Finds the correct height of the accordion content
+ * @param {HTMLElement} accordion The accordion
+ * @returns {Number} Accordion content's height in px value
+ */
+const getContentHeight = accordion => {
+  const accordionInner = accordion.querySelector('.accordion__inner')
+  
+  if (accordion.classList.contains('is-open')) return 0
+  return accordionInner.getBoundingClientRect().height
+}
+
+/**
+ * Toggles the accordion open or closed
+ * @param {HTMLElement} accordion The accordion
+ * @param {Number} height The current height of the accordion
+ */
+const updateAccordion = (accordion, height) => {
+  const accordionContent = accordion.querySelector('.accordion__content')
+
+  // Updates the accordion
+  accordion.classList.toggle('is-open')
+  accordionContent.style.height = `${height}px`
+}
+
 const accordionContainer = document.querySelector('.accordion-container')
 
 accordionContainer.addEventListener('click', e => {
@@ -11,36 +35,7 @@ accordionContainer.addEventListener('click', e => {
   if (!accordionHeader) return
 
   const accordion = accordionHeader.parentElement
-  const accordionContent = accordionHeader.nextElementSibling
-  const accordionInner = accordionContent.children[0]
+  const height = getContentHeight(accordion)
   
-  const height = accordion.classList.contains('is-open')
-    ? 0
-    : accordionInner.getBoundingClientRect().height
-
-  accordionContent.style.height = `${height}px`
-  accordion.classList.toggle('is-open')
+  updateAccordion(accordion, height)
 })
-
-// accordions.forEach(accordion => {
-//   accordionHeader = accordion.querySelector('.accordion__header')
-//   accordionHeader.addEventListener('click', e => {
-//     accordion.classList.toggle('is-open')
-//   })
-// })
-
-// function openAccordian(el) {
-//   el.classList.add('is-open')
-// }
-
-// Array.from(accordianButtons).forEach((button) =>
-//   button.addEventListener('click', openAccordian)
-// )
-
-// const firstAccordion = document.querySelector('.accordion')
-// const firstAccordionHeader = firstAccordion.querySelector('.accordion__header')
-
-// firstAccordionHeader.addEventListener('click', e =>
-//   firstAccordion.classList.toggle('is-open')
-// )
-
