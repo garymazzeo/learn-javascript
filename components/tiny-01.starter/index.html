@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tiny Test</title>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <main>
+      <div class="component parent-component flow">
+        <h1>Parent Counter</h1>
+        <p>Count: 0</p>
+        <button>Increase count by 1</button>
+
+        <div class="half">
+          <div class="component child-component flow">
+            <h2>Child Counter</h2>
+            <p>Count: 0</p>
+            <button>Increase count by 1</button>
+            <button>Increase parent count by 1</button>
+          </div>
+          <div class="component total-component flow text">
+            <h2>Total Count</h2>
+            <ul>
+              <li>Parent Count: 0</li>
+              <li>Child Count: 0</li>
+              <li>Total Count: 0</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+
+  <script type="module" src="js/main.js"></script>
+</html>
