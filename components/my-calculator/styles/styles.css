@@ -1,0 +1,112 @@
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calculator {
+  display: flex;
+  flex-direction: column;
+  max-width: 256px;
+  border: 0.125em #ccc solid;
+}
+
+.display {
+  padding: 1em;
+  background: black;
+  color: white;
+  text-align: right;
+  font-family: monospace;
+  font-size: 2em;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(4, 4em);
+  grid-template-rows: repeat(5, 4em);
+  grid-template-areas:
+    "plus minus times divide"
+    "seven eight nine equals"
+    "four five six equals"
+    "one two three equals"
+    "zero period clear equals";
+}
+
+.keys button {
+  /* padding: 1em; */
+  border-radius: 0;
+  font-size: 1em;
+}
+
+.equals {
+  grid-area: equals;
+  background-color: orange;
+}
+
+.plus {
+  grid-area: plus;
+}
+
+.minus {
+  grid-area: minus;
+}
+
+.times {
+  grid-area: times;
+}
+
+.divide {
+  grid-area: divide;
+}
+
+
+.one {
+  grid-area: one;
+}
+
+.two {
+  grid-area: two;
+}
+
+.three {
+  grid-area: three;
+}
+
+.four {
+  grid-area: four;
+}
+
+.five {
+  grid-area: five;
+}
+
+.six {
+  grid-area: six;
+}
+
+.seven {
+  grid-area: seven;
+}
+
+.eight {
+  grid-area: eight;
+}
+
+.nine {
+  grid-area: nine;
+}
+
+.zero {
+  grid-area: zero;
+}
+
+.period {
+  grid-area: period;
+}
+
+.clear {
+  grid-area: clear;
+}
