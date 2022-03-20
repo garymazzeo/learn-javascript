@@ -1,10 +1,33 @@
+/**
+ * Create a list of dots matching the number of slides
+ * @returns {HTMLElement} List of dots
+ */
+const createDots = slides => {
+  const dotsContainer = document.createElement('div')
+  dotsContainer.classList.add('carousel__dots')
+
+  slides.forEach(slide => {
+    const dot = document.createElement('button')
+    dot.classList.add('carousel__dot')
+
+    if (slide.classList.contains('is-selected')) {
+      dot.classList.add('is-selected')
+    }
+
+    dotsContainer.appendChild(dot)
+  })
+
+  return dotsContainer
+}
+
+
 const carousel = document.querySelector('.carousel')
 const previousButton = document.querySelector('.previous-button')
 const nextButton = document.querySelector('.next-button')
 const contents = document.querySelector('.carousel__contents')
-const dotsContainer = document.querySelector('.carousel__dots')
-const dots = [...carousel.querySelectorAll('.carousel__dot')]
 const slides = [...carousel.querySelectorAll('.carousel__slide')]
+const dotsContainer = createDots(slides)
+const dots = [...dotsContainer.children]
 
 
 /**
@@ -76,6 +99,7 @@ const showHideArrowButtons = targetSlideIndex => {
 }
 
 
+carousel.appendChild(dotsContainer)
 
 setSlidePositions()
 
@@ -105,7 +129,7 @@ dotsContainer.addEventListener('click', event => {
   const currentSlideIndex = getCurrentSlideIndex()
   const targetSlideIndex = dots.findIndex(d => d === dot)
 
-  switchSlide(currentSlide, targetSlideIndex)
+  switchSlide(currentSlideIndex, targetSlideIndex)
   highlightDot(currentSlideIndex, targetSlideIndex)
   showHideArrowButtons(targetSlideIndex)
 })
