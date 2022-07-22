@@ -55,7 +55,7 @@ calculatorButtonsDiv.addEventListener('click', e => {
   }
   
   if (buttonType === 'clear') {
-    if (button.textContent = 'AC') {
+    if (button.textContent === 'AC') {
       delete calculator.dataset.firstValue
       delete calculator.dataset.operator
     }
@@ -66,3 +66,125 @@ calculatorButtonsDiv.addEventListener('click', e => {
 
   calculator.dataset.previousButtonType = buttonType
 })
+
+
+
+// TESTS!
+// 
+
+
+// const buttonTwo = calculator.querySelector('[data-key="2"]')
+// buttonTwo.click()
+
+// const result = calculator.querySelector('.calculator__display').textContent
+// console.assert(result === '2', 'Number key')
+
+// const clearKey = calculator.querySelector('[data-key="clear"]')
+// clearKey.click()
+// clearKey.click()
+// const resultAfterClear = calculator.querySelector('.calculator__display').textContent
+// console.assert(resultAfterClear === '0', 'Calculator cleared')
+
+// console.assert(!calculator.dataset.firstValue, 'No first value!')
+// console.assert(!calculator.dataset.operator, 'No operator value!')
+
+
+
+function pressKey(key) {
+  calculator.querySelector(`[data-key="${key}"]`).click()
+}
+
+function getDisplayValue() {
+  return calculator.querySelector('.calculator__display').textContent
+}
+
+function resetCalculator() {
+  pressKey('clear')
+  pressKey('clear')
+
+  console.assert(getDisplayValue() === '0', 'Calculator cleared')
+  console.assert(!calculator.dataset.firstValue, 'No first value')
+  console.assert(!calculator.dataset.operator, 'No operator value')
+}
+
+function pressKeys(...keys) {
+  keys.forEach(pressKey)
+}
+
+function runTest(test) {
+  pressKeys(...test.keys)
+  console.assert(getDisplayValue() === test.result, test.message)
+  resetCalculator()
+}
+
+
+// pressKey(2)
+// console.assert(getDisplayValue() === '2', 'Number key')
+// resetCalculator()
+
+// pressKey(3)
+// pressKey(5)
+// console.assert(getDisplayValue() === '35', 'Number number')
+// resetCalculator()
+
+// pressKey('4')
+// pressKey('decimal')
+// console.assert(getDisplayValue() === '4.', 'Nuklber Decimal')
+// resetCalculator()
+
+// pressKeys('4', 'decimal', '5')
+// console.assert(getDisplayValue() === '4.5', 'Number decimal number')
+// resetCalculator()
+
+
+// runTest({
+//   message: 'Number decimal number',
+//   keys: ['4', 'decimal', '5']
+//   result: '4.5'
+// })
+
+const test = [
+  {
+    message: 'number key',
+    keys: ['2'],
+    result: '2',
+  },
+  {
+    message: 'Number Number',
+    keys: ['3', '5'],
+    result: '35'
+  },
+  {
+    message: 'Number Decimal',
+    keys: ['4', 'decimal'],
+    result: '4.'
+  },
+  {
+    message: 'Number Decimal Number',
+    keys: ['4', 'decimal', '5'],
+    result: '4.5'
+  },
+  {
+    message: 'addition',
+    keys: ['4', 'plus', '5', 'equal'],
+    result: '9'
+  }
+]
+test.forEach(runTest)
+
+
+function testClearKey() {
+  // Before calculation
+  pressKeys('5', 'clear')
+  const clearKeyText = calculator.querySelector('[data-key="clear"]').textContent
+  console.assert(getDisplayValue() === '0', 'Clear before calculation')
+  console.assert(clearKeyText === 'AC', 'Clear once, should show AC')
+  resetCalculator()
+  // After calculator
+  pressKeys('5', 'times', '9', 'equal', 'clear')
+  const { firstValue, operator } = calculator.dataset
+  console.assert(firstValue, 'Clear once; should have first value')
+  console.assert(operator, 'Clear once, should have operator value')
+  resetCalculator()
+}
+testClearKey()
